@@ -1,5 +1,6 @@
 package com.fluo.api.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,13 +9,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class HelloController {
 
+    public record ApplicationStatus(String status, String app) {}
+
     @GetMapping("/hello")
-    public String hello() {
-        return "Hello! Welcome to Fluo.";
+    public ResponseEntity<String> hello() {
+        return ResponseEntity.ok("Hello! Welcome to Fluo.");
     }
 
     @GetMapping("/status")
-    public String checkStatus() {
-        return "{\"status\": \"OK\", \"app\": \"Fluo\"}";
+    public ResponseEntity<ApplicationStatus> checkStatus() {
+        ApplicationStatus statusInfo = new ApplicationStatus("OK", "Fluo");
+        return ResponseEntity.ok(statusInfo);
     }
 }
