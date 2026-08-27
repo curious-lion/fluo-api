@@ -2,6 +2,8 @@ package com.fluo.api.service;
 
 import com.fluo.api.dto.CategoryRequest;
 import com.fluo.api.dto.CategoryResponse;
+import com.fluo.api.exception.BusinessRuleException;
+import com.fluo.api.exception.ResourceNotFoundException;
 import com.fluo.api.model.Category;
 import com.fluo.api.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
@@ -13,7 +15,7 @@ import java.util.stream.Collectors;
 @Service
 public class CategoryService {
 
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
     public CategoryService(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
@@ -30,7 +32,7 @@ public class CategoryService {
     @Transactional(readOnly = true)
     public CategoryResponse create(CategoryRequest categoryRequest) {
         if (categoryRepository.existsByName(categoryRequest.getName())) {
-            throw new IllegalArgumentException("Category already exists");
+            throw new BusinessRuleException("Category already exists");
         }
 
         Category category = Category.builder()
@@ -44,7 +46,7 @@ public class CategoryService {
     @Transactional
     public void delete(Long id) {
         if (!categoryRepository.existsById(id)) {
-            throw new IllegalArgumentException("Unable to delete: category does not exist");
+            throw new ResourceNotFoundException("Unable to delete: category does not exist");
         }
 
         // TODO: Before deleting, verify if there are transactions associated with it
