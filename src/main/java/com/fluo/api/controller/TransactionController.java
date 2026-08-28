@@ -2,7 +2,6 @@ package com.fluo.api.controller;
 
 import com.fluo.api.dto.TransactionRequest;
 import com.fluo.api.dto.TransactionResponse;
-import com.fluo.api.model.Transaction;
 import com.fluo.api.service.TransactionService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
