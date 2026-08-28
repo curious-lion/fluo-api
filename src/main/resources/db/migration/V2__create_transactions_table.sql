@@ -7,5 +7,5 @@ CREATE TABLE transactions (
     date TIMESTAMP WITHOUT TIME ZONE NOT NULL,
     type varchar(10) NOT NULL,
     category_id BIGINT NOT NULL,
-    CONSTRAINT fk_transaction_category FOREIGN KEY category_id REFERENCES categories(id)
+    CONSTRAINT fk_transaction_category FOREIGN KEY (category_id) REFERENCES categories(id)
 );
